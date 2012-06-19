@@ -1,0 +1,18 @@
+(defun tt:major-mode-of-buffer (buffer)
+  (let ((b (current-buffer)))
+    (switch-to-buffer buffer)
+    (let ((mode major-mode))
+      (switch-to-buffer b)
+      mode)))
+
+(defun tt:buffer-file-name-or-directory (buf)
+  (cond ((buffer-file-name buf))
+        ((eq (tt:major-mode-of-buffer buf) 'dired-mode)
+         (let ((b (current-buffer)))
+           (switch-to-buffer buf)
+           (let ((cd (dired-current-directory)))
+             (switch-to-buffer b)
+             cd)))
+        (t nil)))
+
+(provide 'tt-buffer)

@@ -38,12 +38,14 @@
         s))
 
 (defun tt:string-starts-with (string start)
-  (string= start (substring string 0 (length start))))
+  (when (> (length string) (length start))
+    (string= start (substring string 0 (length start)))))
 
 (defun tt:string-ends-with (string end)
-  (string= end (substring string
-                          (- (length string) (length end))
-                          (length string))))
+  (when (> (length string) (length end))
+    (string= end (substring string
+                            (- (length string) (length end))
+                            (length string)))))
 
 (defun tt:string-to-string-list (str)
   (mapcar #'char-to-string (string-to-list str)))
